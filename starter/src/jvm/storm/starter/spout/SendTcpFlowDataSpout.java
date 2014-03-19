@@ -30,7 +30,7 @@ public class SendTcpFlowDataSpout extends BaseRichSpout {
     
     /*读取本地文件进行数据分析*/
     sentences = new String[1389];
-	String pathName = "C:\\Users\\hobodong\\workspace\\starter\\data\\report.log";
+	String pathName = "C:\\Users\\hobodong\\git\\spectroscope\\starter\\data\\report.log";
 	File filename = new File(pathName);
 	InputStreamReader reader = null;
 	try {
@@ -72,7 +72,15 @@ public class SendTcpFlowDataSpout extends BaseRichSpout {
     Utils.sleep(100);
 
     String sentence = sentences[_rand.nextInt(sentences.length)];
+    String[] params = sentence.split(" ");
     
+    params[0] = Integer.toString((int)System.currentTimeMillis());
+    sentence = "";
+    
+    for(int i = 0; i< params.length ; i++ )
+    {
+    	sentence = sentence + params[i] + " ";
+    }
     _collector.emit(new Values(sentence));
   }
 
